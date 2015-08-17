@@ -17,6 +17,7 @@ import sun.bob.filechooser.beans.FileBean;
  * Created by bob.sun on 15/8/16.
  */
 public class MainFragment extends Fragment {
+    private FileAdapter fileAdapter;
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup parent, Bundle savedInstanceState){
         View ret = null;
@@ -26,7 +27,7 @@ public class MainFragment extends Fragment {
     }
 
     private void initListView(ListView listView){
-        FileAdapter fileAdapter = new FileAdapter(getActivity(), R.layout.layout_file_item);
+        fileAdapter = new FileAdapter(getActivity(), R.layout.layout_file_item);
         fileAdapter.setFolder(Environment.getExternalStorageDirectory().getPath());
         listView.setAdapter(fileAdapter);
         listView.setDivider(null);
@@ -34,12 +35,20 @@ public class MainFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FileAdapter adapter = (FileAdapter) parent.getAdapter();
-                if (!adapter.getItem(position).isFolder()){
+                if (!adapter.getItem(position).isFolder()) {
                     return;
+                }
+                if (!adapter.getItem(position).getFileName().equalsIgnoreCase("..")) {
+                    adapter.push();
                 }
                 adapter.setFolder(((FileBean) parent.getAdapter().getItem(position)).getFullName());
                 adapter.notifyDataSetChanged();
             }
         });
     }
+
+    public boolean pop(){
+        return fileAdapter == null ? false : fileAdapter.pop();
+    }
+
 }
