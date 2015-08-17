@@ -28,8 +28,10 @@ public class FileAdapter extends ArrayAdapter {
     public void setFolder(String folderPath){
         files = new ArrayList();
         Iterator iterator = Arrays.asList(new File(folderPath).listFiles()).iterator();
+        File file = null;
         while(iterator.hasNext()){
-            files.add(new FileBean(((File) iterator.next()).getName()));
+            file = (File) iterator.next();
+            files.add(new FileBean(file.getName(),file.isDirectory()));
         }
     }
 
