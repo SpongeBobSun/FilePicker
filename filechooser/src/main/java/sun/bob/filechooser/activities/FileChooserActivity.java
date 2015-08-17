@@ -32,6 +32,7 @@ public class FileChooserActivity extends AppCompatActivity {
         Constants.documentIcon = BitmapFactory.decodeResource(getResources(), R.drawable.document);
         Constants.fileIcon = BitmapFactory.decodeResource(getResources(), R.drawable.file);
         Constants.musicIcon = BitmapFactory.decodeResource(getResources(), R.drawable.music);
+        Constants.parentIcon = BitmapFactory.decodeResource(getResources(), R.drawable.opened_folder);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

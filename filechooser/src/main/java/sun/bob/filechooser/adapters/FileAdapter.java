@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import sun.bob.filechooser.R;
 import sun.bob.filechooser.beans.FileBean;
@@ -26,18 +27,30 @@ public class FileAdapter extends ArrayAdapter {
     }
 
     public void setFolder(String folderPath){
+        if (files != null){
+            files.clear();
+        }
         files = new ArrayList();
-        Iterator iterator = Arrays.asList(new File(folderPath).listFiles()).iterator();
-        File file = null;
+        File file = new File(folderPath);
+        Iterator iterator = Arrays.asList(file.listFiles()).iterator();
+        if (file.getParent() != null){
+            files.add(new FileBean("..", true, file.getParent()));
+        }
+        File filetoAdd = null;
         while(iterator.hasNext()){
-            file = (File) iterator.next();
-            files.add(new FileBean(file.getName(),file.isDirectory()));
+            filetoAdd = (File) iterator.next();
+            files.add(new FileBean(filetoAdd.getName(), filetoAdd.isDirectory(), filetoAdd.getAbsolutePath()));
         }
     }
 
     @Override
     public int getCount(){
         return files.size();
+    }
+
+    @Override
+    public FileBean getItem(int position){
+        return files.get(position);
     }
 
     @Override

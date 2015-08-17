@@ -12,12 +12,20 @@ import sun.bob.filechooser.utils.Constants;
 public class FileBean {
     private Bitmap icon;
     private String fileName;
-    public FileBean(String fileName, boolean isFolder){
+    private String fullName;
+    private boolean hasParent;
+    private boolean folder;
+    public FileBean(String fileName, boolean isFolder, String fullName){
         this.fileName = fileName;
+        this.fullName = fullName;
+        this.folder = isFolder;
         if (isFolder){
             icon = Constants.folderIcon;
         } else {
             icon = Constants.fileIcon;
+        }
+        if (fileName.equalsIgnoreCase("..")){
+            icon = Constants.parentIcon;
         }
     }
 
@@ -27,5 +35,13 @@ public class FileBean {
 
     public String getFileName() {
         return fileName;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public boolean isFolder() {
+        return folder;
     }
 }

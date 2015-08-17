@@ -6,10 +6,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import sun.bob.filechooser.R;
 import sun.bob.filechooser.adapters.FileAdapter;
+import sun.bob.filechooser.beans.FileBean;
 
 /**
  * Created by bob.sun on 15/8/16.
@@ -27,5 +29,17 @@ public class MainFragment extends Fragment {
         FileAdapter fileAdapter = new FileAdapter(getActivity(), R.layout.layout_file_item);
         fileAdapter.setFolder(Environment.getExternalStorageDirectory().getPath());
         listView.setAdapter(fileAdapter);
+        listView.setDivider(null);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                FileAdapter adapter = (FileAdapter) parent.getAdapter();
+                if (!adapter.getItem(position).isFolder()){
+                    return;
+                }
+                adapter.setFolder(((FileBean) parent.getAdapter().getItem(position)).getFullName());
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }
