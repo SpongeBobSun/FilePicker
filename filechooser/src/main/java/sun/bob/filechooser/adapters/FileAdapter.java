@@ -79,6 +79,12 @@ public class FileAdapter extends ArrayAdapter {
         final FileBean bean = files.get(posistion);
         viewHolder.name.setText(bean.getFileName());
         viewHolder.icon.setImageBitmap(files.get(posistion).getIcon());
+        if (bean.getFileName().equalsIgnoreCase("..")){
+            viewHolder.checkBox.setVisibility(View.INVISIBLE);
+            return ret;
+        } else {
+            viewHolder.checkBox.setVisibility(View.VISIBLE);
+        }
         viewHolder.checkBox.setChecked(Results.getInstance().contains(bean.getFullName()));
         viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override

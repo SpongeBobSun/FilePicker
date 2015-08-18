@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,5 +47,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (resultCode == RESULT_OK){
+            ((ListView) findViewById(R.id.id_listview)).setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data.getStringArrayListExtra("files")));
+        }
     }
 }
